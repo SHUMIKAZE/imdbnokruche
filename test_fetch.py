@@ -1,4 +1,4 @@
-from src.db.db_api import SQLite3Connection
+from src.core.db.db_api import SQLite3Connection
 from sqlite3 import Row, connect
 
 conn = connect("media.db")
