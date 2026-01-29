@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List, Any
+from typing import List, Any, Optional, Tuple
 
 
 class BaseConnection(ABC):
@@ -7,6 +7,7 @@ class BaseConnection(ABC):
     def _fetch(
         self,
         sql: str,
+        params: Optional[Tuple[Any, ...]],
     ) -> List[Any]:
         ...
 
@@ -14,6 +15,7 @@ class BaseConnection(ABC):
     def _fetchrow(
         self,
         sql: str,
+        params: Optional[Tuple[Any, ...]],
     ) -> Any:
         ...
 
@@ -21,6 +23,7 @@ class BaseConnection(ABC):
     def _execute(
         self,
         sql: str,
+        params: Optional[Tuple[Any, ...]],
     ) -> None:
         ...
 
