@@ -1,7 +1,7 @@
 from src.core.models.work import Work
 from src.core.db.repositories.works_repo import WorksRepo
 from src.core.db.db_api import SQLite3Connection
-from src.core.db.utils import connect_db, close_db, init_db
+from src.utils import connect_db, close_db, init_db
 
 from pathlib import Path
 

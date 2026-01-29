@@ -1,6 +1,6 @@
 from src.core.db import WorksRepo
 from src.core.db import SQLite3Connection
-from src.core.db.utils import connect_db, close_db, init_db
+from src.utils import connect_db, close_db, init_db
 
 from pathlib import Path
 
