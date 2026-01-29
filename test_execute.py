@@ -6,7 +6,4 @@ conn.row_factory = Row
 
 db = SQLite3Connection(conn)
 
-rows = db._fetch("SELECT * FROM genres WHERE name = ?", ("detective",))
-
-for r in rows:
-    print(dict(rows))
+db._execute("INSERT INTO genres(name) VALUES(?)", ("detective",))
