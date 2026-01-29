@@ -1,12 +1,15 @@
+from src.core.db.repositories.works_repo import WorksRepo
 from src.core.db.db_api import SQLite3Connection
 from sqlite3 import Row, connect
 
-conn = connect("media.db")
+conn = connect("m.db")
 conn.row_factory = Row
 
 db = SQLite3Connection(conn)
 
-rows = db._fetch("SELECT * FROM genres WHERE name = ?", ("detective",))
+rep = WorksRepo(db)
 
-for r in rows:
-    print(dict(rows))
+works = rep.get_all_works()
+
+for work in works:
+    print(work.id, work.original_title, work.year)

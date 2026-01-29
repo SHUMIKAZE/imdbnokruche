@@ -1,3 +1,4 @@
+from typing import List
 from ...models.work import Work
 from ..db_api import BaseConnection
 
@@ -27,3 +28,23 @@ class WorksRepo():
             work.industry,
             work.year,
         ))
+
+    def get_all_works(self) -> List[Work]:
+        sql = "SELECT * FROM works"
+        rows = self._db._fetch(sql, None)
+
+        works = [
+            Work(
+                id = row["id"],
+                original_title = row["original_title"],
+                title = row["title"],
+                native_title = row["native_title"],
+                format = row["format"],
+                consumption_type = row["consumption_type"],
+                industry = row["industry"],
+                year = row["year"],
+            )
+            for row in rows
+        ]
+
+        return works 

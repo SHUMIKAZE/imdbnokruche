@@ -7,7 +7,7 @@ conn = connect("m.db")
 conn.row_factory = Row
 
 db = SQLite3Connection(conn)
-work = Work(original_title="Reservour Dogs", year=1992, format="Film", consumption_type="watch", industry="American film")
+work = Work(original_title="Pulp Fiction", year=1994, format="Film", consumption_type="watch", industry="American film")
 
 rep = WorksRepo(db)
 
