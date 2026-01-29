@@ -1,9 +1,12 @@
 from src.core.db import WorksRepo
 from src.core.db import SQLite3Connection
-from sqlite3 import Row, connect
+from src.core.db.utils import connect_db, close_db, init_db
 
-conn = connect("m.db")
-conn.row_factory = Row
+from pathlib import Path
+
+db_path = Path("media.db")
+conn = connect_db(db_path)
+init_db(conn)
 
 db = SQLite3Connection(conn)
 
@@ -13,3 +16,5 @@ works = rep.get_all_works()
 
 for work in works:
     print(work.id, work.original_title, work.year)
+
+close_db(conn)
