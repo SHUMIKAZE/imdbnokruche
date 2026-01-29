@@ -23,3 +23,10 @@ class BaseConnection(ABC):
         sql: str,
     ) -> None:
         ...
+
+    @abstractmethod
+    def _executescript(
+        self,
+        sql_script: str,
+    ) -> None:
+        ...

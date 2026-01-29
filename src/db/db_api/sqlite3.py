@@ -11,6 +11,22 @@ class SQLite3Connection(BaseConnection):
     def _fetch(self, sql: str) -> List[Any]:
         cursor = self.conn.cursor()
         cursor.execute(sql)
-        data = cursor.fetchall()
+        rows = cursor.fetchall()
 
-        return data
+        return rows
+
+    def _fetchrow(self, sql: str) -> Any:
+        cursor = self.conn.cursor()
+        cursor.execute(sql)
+        row = cursor.fetchone()
+
+        return row
+
+    def _execute(self, sql: str) -> None:
+        cursor = self.conn.cursor()
+        cursor.execute(sql)
+        self.conn.commit()
+
+    def _executescript(self, sql_script: str) -> None:
+        self.conn.executescript(sql_script)
+        self.conn.commit()
