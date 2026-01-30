@@ -1,23 +1,26 @@
+from src.core.models import Work
 from src.core.db import WorksRepo
 from src.core.db import SQLite3Connection
 from src.utils import connect_db, close_db, init_db
 
 from pathlib import Path
-from pprint import pprint
+from json import dumps
 
 db_path = Path("media.db")
 conn = connect_db(db_path)
 init_db(conn)
 
 db = SQLite3Connection(conn)
-
 rep = WorksRepo(db)
 
 works = rep.get_all_works()
 
-for work in works:
-    print(work.id, work.original_title, work.year)
+work = Work(original_title="Inglourious Basterds", year=2009, format="Film", consumption_type="watch", industry="American film")
+rep.add_work(work)
 
-pprint(rep.get_work_by_id(1))
+rep.delete_work(2)
+
+
+print(dumps(work.model_dump(), indent=2))
 
 close_db(conn)

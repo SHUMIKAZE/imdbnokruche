@@ -31,3 +31,7 @@ class WorksRepo():
         work = Work.model_validate(dict(row))
 
         return work
+
+    def delete_work(self, work_id: int) -> None:
+        sql = "DELETE FROM works WHERE id = ?"
+        self._db._execute(sql, (work_id,))
