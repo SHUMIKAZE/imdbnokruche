@@ -23,3 +23,11 @@ class WorksRepo():
         works = [Work.model_validate(dict(row)) for row in rows]
 
         return works 
+
+    def get_work_by_id(self, work_id: int) -> Work:
+        sql = "SELECT * FROM works WHERE id = ?"
+
+        row = self._db._fetchrow(sql, (work_id,))
+        work = Work.model_validate(dict(row))
+
+        return work
