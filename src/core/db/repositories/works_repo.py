@@ -35,3 +35,10 @@ class WorksRepo():
     def delete_work(self, work_id: int) -> None:
         sql = "DELETE FROM works WHERE id = ?"
         self._db._execute(sql, (work_id,))
+
+    def update_work(self, work: Work) -> None:
+        data = work.to_table_works()
+        assignment = ", ".join(f"{k}=?" for k in data.keys())
+        sql = f"UPDATE works SET {assignment} WHERE id = ?"
+
+        self._db._execute(sql, (*data.values(), work.id))

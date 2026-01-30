@@ -15,11 +15,14 @@ rep = WorksRepo(db)
 
 works = rep.get_all_works()
 
-work = Work(original_title="Inglourious Basterds", year=2009, format="Film", consumption_type="watch", industry="American film")
-rep.add_work(work)
+work = Work(id = 3, original_title="Inglourious Basterds", title="Russian title", year=2009, format="Film", consumption_type="watch", industry="American film")
 
-rep.delete_work(2)
+rep.update_work(work)
 
+works = rep.get_all_works()
+
+for w in works:
+    print(dumps(w.model_dump(), indent=2))
 
 print(dumps(work.model_dump(), indent=2))
 
