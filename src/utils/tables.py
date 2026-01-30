@@ -4,7 +4,7 @@ CREATE_WORKS_SQL = """
         original_title TEXT NOT NULL,
         title TEXT DEFAULT NULL,
         native_title TEXT DEFAULT NULL,
-        year INTEGER,
+        year INTEGER NOT NULL,
         format TEXT NOT NULL,
         consumption_type TEXT NOT NULL,
         industry TEXT NOT NULL
