@@ -4,7 +4,6 @@ from src.core.db import SQLite3Connection
 from src.utils import connect_db, close_db, init_db
 
 from pathlib import Path
-from json import dumps
 
 db_path = Path("media.db")
 conn = connect_db(db_path)
@@ -23,7 +22,7 @@ wr.add_work(work)
 works = wr.get_all_works()
 
 for w in works:
-    print(dumps(w.model_dump(), indent=2))
+    print(w.model_dump_json(indent=2))
 
 # print(dumps(work.model_dump(), indent=2))
 
@@ -31,6 +30,9 @@ print(wr.exists(3))
 
 gen = Genre(name = "arthouse")
 
-gr.add_genre(gen)
+# gr.add_genre(gen)
+genres = gr.get_all_genres()
+for g in genres:
+    print(g.model_dump_json(indent=2))
 
 close_db(conn)
