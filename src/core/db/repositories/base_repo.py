@@ -42,7 +42,7 @@ class BaseRepo(Generic[T], ABC):
         sql = f"DELETE FROM {self.table} WHERE id = ?"
         self._db._execute(sql, (obj_id,))
 
-    def update_work(self, obj: T) -> None:
+    def update(self, obj: T) -> None:
         data = obj.model_dump()
         assignment = ", ".join(f"{k}=?" for k in data.keys())
 

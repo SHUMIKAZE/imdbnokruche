@@ -24,7 +24,6 @@ works = wr.get_all()
 for w in works:
     print(w.model_dump_json(indent=2))
 
-# print(dumps(work.model_dump(), indent=2))
 
 print(wr.exists(3))
 
@@ -34,13 +33,13 @@ if not gr.exists(1):
     gr.add(gen)
 gr.delete(1)
 
-gen2 = Genre(name = "detective")
+gen2 = Genre(id = 2, name = "detective")
 
 gr.add(gen2)
 
 gen3 = Genre(id = 2, name = "definately not detective")
 
-# gr.update_genre(gen3)
+gr.update(gen3)
 
 genres = gr.get_all()
 for g in genres:
