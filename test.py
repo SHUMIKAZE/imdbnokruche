@@ -10,41 +10,65 @@ conn = connect_db(db_path)
 init_db(conn)
 
 db = SQLite3Connection(conn)
+
 wr = WorksRepo(db)
 gr = GenresRepo(db)
 
-works = wr.get_all()
-
-work = Work(original_title="Inglourious Basterds", title="Russian title", year=2009, format="Film", consumption_type="watch", industry="American film")
-
-wr.add(work)
-
-works = wr.get_all()
-
-for w in works:
-    print(w.model_dump_json(indent=2))
-
-
-print(wr.exists(3))
-
-gen = Genre(name = "arthouse")
-
+wr.rewrite()
 gr.rewrite()
 
-if not gr.exists(1):
-    gr.add(gen)
-gr.delete(1)
+#####################################################
+################ START TESTING HERE #################
+#####################################################
 
-gen2 = Genre(id = 2, name = "detective")
+w1 = Work(original_title="Parasyte: The Maxim", year=2015, format="Series", consumption_type="watch", industry="Japanese animation")
+w2 = Work(original_title="Pulp Fiction", year=1994, format="Movie", consumption_type="watch", industry="American film")
+w3 = Work(original_title="Breaking Bad", year=2013, format="Series", consumption_type="watch", industry="American series")
+w4 = Work(original_title="War and piece", year=1867, format="Book", consumption_type="read", industry="Russian classic")
 
-gr.add(gen2)
+wr.add(w1)
+wr.add(w2)
+wr.add(w3)
+wr.add(w4)
 
-gen3 = Genre(id = 2, name = "definately not detective")
+works = wr.get_all(limit=3, offset=1)
 
-gr.update(gen3)
+print("#" * 80)
+for work in works:
+    print(work.model_dump_json(indent=2))
+
+w3 = Work(id=3, original_title="Better Call Saul", year=2022, format="Series", consumption_type="watch", industry="American series")
+
+wr.update(w3)
+
+works = wr.get_all(filter={"consumption_type": "watch"})
+
+print("#" * 80)
+for work in works:
+    print(work.model_dump_json(indent=2))
+
+
+g1 = Genre(name="arthouse")
+g2 = Genre(name="drama")
+g3 = Genre(name="novel")
+g4 = Genre(name="detective")
+g5 = Genre(name="shounen")
+
+gr.add(g1)
+gr.add(g2)
+gr.add(g3)
+gr.add(g4)
+gr.add(g5)
 
 genres = gr.get_all()
-for g in genres:
-    print(g.model_dump_json(indent=2))
+
+print("#" * 80)
+for genre in genres:
+    print(genre.model_dump_json(indent=2))
+
+print(gr.exists(5))
+gr.delete(5)
+print(gr.exists(5))
+
 
 close_db(conn)
