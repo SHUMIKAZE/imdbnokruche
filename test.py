@@ -30,7 +30,18 @@ print(wr.exists(3))
 
 gen = Genre(name = "arthouse")
 
-# gr.add_genre(gen)
+if not gr.exists(1):
+    gr.add_genre(gen)
+gr.delete_genre(1)
+
+gen2 = Genre(name = "detective")
+
+gr.add_genre(gen2)
+
+gen3 = Genre(id = 2, name = "definately not detective")
+
+# gr.update_genre(gen3)
+
 genres = gr.get_all_genres()
 for g in genres:
     print(g.model_dump_json(indent=2))

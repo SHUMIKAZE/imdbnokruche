@@ -1,5 +1,5 @@
 from sqlite3 import Connection
-from .tables import (
+from ..tables import (
     CREATE_WORKS_SQL,
     CREATE_GENRES_SQL,
     CREATE_COMPLETED_SQL,
