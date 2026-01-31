@@ -1,3 +1,3 @@
 from .work import Work
-from .genres import Genres
+from .genre import Genre
 from .completed import Completed

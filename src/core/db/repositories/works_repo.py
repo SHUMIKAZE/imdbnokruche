@@ -43,3 +43,8 @@ class WorksRepo():
         sql = f"UPDATE works SET {assignment} WHERE id = ?"
 
         self._db._execute(sql, (*data.values(), work.id))
+
+    def exists(self, work_id) -> bool:
+        sql = "SELECT 1 FROM works WHERE id = ? LIMIT 1"
+        
+        return self._db._fetchrow(sql, (work_id,)) is not None

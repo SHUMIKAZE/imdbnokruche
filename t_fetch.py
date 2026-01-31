@@ -17,7 +17,7 @@ works = rep.get_all_works()
 
 work = Work(id = 3, original_title="Inglourious Basterds", title="Russian title", year=2009, format="Film", consumption_type="watch", industry="American film")
 
-rep.update_work(work)
+rep.add_work(work)
 
 works = rep.get_all_works()
 
@@ -25,5 +25,7 @@ for w in works:
     print(dumps(w.model_dump(), indent=2))
 
 print(dumps(work.model_dump(), indent=2))
+
+print(rep.exists(3))
 
 close_db(conn)
