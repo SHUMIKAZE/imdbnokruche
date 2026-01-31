@@ -1,4 +1,4 @@
-from typing import TypeVar, Generic, Type, List
+from typing import Dict, Optional, TypeVar, Generic, Type, List
 from abc import ABC
 
 from ...models import BaseDBModel
@@ -23,9 +23,29 @@ class BaseRepo(Generic[T], ABC):
 
         self._db._execute(sql, (tuple(data.values())))
 
-    def get_all(self) -> List[T]:
+    def get_all(
+            self,
+            filter: Optional[Dict] = None,
+            limit: Optional[int] = None,
+            offset: Optional[int] = None) -> List[T]:
         sql = f"SELECT * FROM {self.table}"
-        rows = self._db._fetch(sql, None)
+        params: list = []
+        
+        if filter:
+            conditions = []
+            for k, v in filter.items():
+                conditions.append(f"{k} = ?")
+                params.append(v)
+            sql += " WHERE " + " AND ".join(conditions)
+
+        if limit is not None:
+            sql += " LIMIT ?"
+            params.append(limit)
+            if offset is not None:
+                sql += " OFFSET ?"
+                params.append(offset)
+
+        rows = self._db._fetch(sql, tuple(params))
 
         objs = [self.model.model_validate(dict(row)) for row in rows]
 
