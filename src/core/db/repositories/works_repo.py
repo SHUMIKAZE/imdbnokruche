@@ -7,7 +7,7 @@ class WorksRepo():
         self._db = db
 
     def add_work(self, work: Work) -> None:
-        data = work.model_dump()
+        data = work.model_dump(exclude="id")
 
         cols = ", ".join(data.keys())
         placeholders = ", ".join("?" * len(data))
