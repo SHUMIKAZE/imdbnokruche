@@ -7,7 +7,7 @@ class WorksRepo():
         self._db = db
 
     def add_work(self, work: Work) -> None:
-        data = work.to_table_works()
+        data = work.model_dump()
 
         cols = ", ".join(data.keys())
         placeholders = ", ".join("?" * len(data))
@@ -37,7 +37,7 @@ class WorksRepo():
         self._db._execute(sql, (work_id,))
 
     def update_work(self, work: Work) -> None:
-        data = work.to_table_works()
+        data = work.model_dump()
         assignment = ", ".join(f"{k}=?" for k in data.keys())
 
         sql = f"UPDATE works SET {assignment} WHERE id = ?"
