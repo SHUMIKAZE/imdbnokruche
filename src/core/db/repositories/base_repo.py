@@ -9,6 +9,7 @@ T = TypeVar("T", bound=BaseDBModel)
 class BaseRepo(Generic[T], ABC):
     table: str
     model: Type[T]
+    _table_creation_sql: str
 
     def __init__(self, db: BaseConnection) -> None:
         self._db = db
@@ -54,3 +55,11 @@ class BaseRepo(Generic[T], ABC):
         sql = f"SELECT 1 FROM {self.table} WHERE id = ? LIMIT 1"
         
         return self._db._fetchrow(sql, (obj_id,)) is not None
+
+    def rewrite (self) -> None:
+        sql = f"""
+        DROP TABLE IF EXISTS {self.table};
+        {self._table_creation_sql}
+        """
+
+        self._db._executescript(sql)

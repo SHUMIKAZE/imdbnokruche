@@ -1,4 +1,4 @@
-CREATE_WORKS_SQL = """
+WORKS_TABLE = """
     CREATE TABLE IF NOT EXISTS works (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         original_title TEXT NOT NULL,
@@ -11,14 +11,14 @@ CREATE_WORKS_SQL = """
     );
 """
 
-CREATE_GENRES_SQL = """
+GENRES_TABLE = """
     CREATE TABLE IF NOT EXISTS genres (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT UNIQUE NOT NULL
     );
 """
 
-CREATE_COMPLETED_SQL = """
+COMPLETED_TABLE = """
     CREATE TABLE IF NOT EXISTS completed (
         work_id INTEGER PRIMARY KEY,
         score REAL CHECK(score BETWEEN 0 AND 10),

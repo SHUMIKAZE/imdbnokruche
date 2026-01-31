@@ -29,6 +29,8 @@ print(wr.exists(3))
 
 gen = Genre(name = "arthouse")
 
+gr.rewrite()
+
 if not gr.exists(1):
     gr.add(gen)
 gr.delete(1)
