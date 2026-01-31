@@ -1,8 +1,7 @@
-from typing import List, Optional, Any
-from pydantic import BaseModel, Field
+from typing import Optional
+from .base import BaseDBModel
 
-class Work(BaseModel):
-    id: int = 0
+class Work(BaseDBModel):
     original_title: str
     title: Optional[str] = None
     native_title: Optional[str] = None

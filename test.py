@@ -13,13 +13,13 @@ db = SQLite3Connection(conn)
 wr = WorksRepo(db)
 gr = GenresRepo(db)
 
-works = wr.get_all_works()
+works = wr.get_all()
 
 work = Work(original_title="Inglourious Basterds", title="Russian title", year=2009, format="Film", consumption_type="watch", industry="American film")
 
-wr.add_work(work)
+wr.add(work)
 
-works = wr.get_all_works()
+works = wr.get_all()
 
 for w in works:
     print(w.model_dump_json(indent=2))
@@ -31,18 +31,18 @@ print(wr.exists(3))
 gen = Genre(name = "arthouse")
 
 if not gr.exists(1):
-    gr.add_genre(gen)
-gr.delete_genre(1)
+    gr.add(gen)
+gr.delete(1)
 
 gen2 = Genre(name = "detective")
 
-gr.add_genre(gen2)
+gr.add(gen2)
 
 gen3 = Genre(id = 2, name = "definately not detective")
 
 # gr.update_genre(gen3)
 
-genres = gr.get_all_genres()
+genres = gr.get_all()
 for g in genres:
     print(g.model_dump_json(indent=2))
 

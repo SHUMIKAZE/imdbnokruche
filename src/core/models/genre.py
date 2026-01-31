@@ -1,5 +1,4 @@
-from pydantic import BaseModel
+from .base import BaseDBModel
 
-class Genre(BaseModel):
-    id: int = 0
+class Genre(BaseDBModel):
     name: str
