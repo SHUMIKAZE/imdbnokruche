@@ -7,6 +7,7 @@ from ..core.db.schema import (
 
 
 def init_db(conn: Connection) -> None:
+    conn.execute("PRAGMA foreign_keys = ON")
     conn.executescript(WORKS_TABLE)
     conn.executescript(GENRES_TABLE)
     conn.executescript(COMPLETED_TABLE)

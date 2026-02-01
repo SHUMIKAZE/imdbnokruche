@@ -1,7 +1,7 @@
 from typing import Optional
-from pydantic import BaseModel
+from .base import BaseDBModel
 
-class Completed(BaseModel):
-    work_id: int = 0
-    rating: Optional[float] = 0
-    notes: Optional[str]
+class Completed(BaseDBModel):
+    view_count: int
+    score: Optional[int] = 0
+    notes: Optional[str] = None

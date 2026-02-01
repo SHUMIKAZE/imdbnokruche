@@ -15,7 +15,11 @@ class BaseRepo(Generic[T], ABC):
         self._db = db
 
     def add(self, obj: T) -> None:
-        data = obj.model_dump(exclude={"id"})
+        if obj.id == 0:
+            data = obj.model_dump(exclude={"id"})
+        else:
+            data = obj.model_dump()
+
         cols = ", ".join(data.keys())
         placeholders = ", ".join("?" * len(data))
 

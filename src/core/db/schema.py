@@ -20,9 +20,10 @@ GENRES_TABLE = """
 
 COMPLETED_TABLE = """
     CREATE TABLE IF NOT EXISTS completed (
-        work_id INTEGER PRIMARY KEY,
-        score REAL CHECK(score BETWEEN 0 AND 10),
+        id INTEGER PRIMARY KEY,
+        view_count INTEGER NOT NULL,
+        score INTEGER CHECK(score BETWEEN 0 AND 1000) DEFAULT 0,
         notes TEXT DEFAULT NULL,
-        FOREIGN KEY(work_id) REFERENCES works(id) ON DELETE CASCADE
+        FOREIGN KEY(id) REFERENCES works(id) ON DELETE CASCADE
     );
 """

@@ -1,5 +1,5 @@
-from src.core.models import Work, Genre
-from src.core.db import WorksRepo, GenresRepo
+from src.core.models import Work, Genre, Completed
+from src.core.db import WorksRepo, GenresRepo, CompletedRepo
 from src.core.db import SQLite3Connection
 from src.utils import connect_db, close_db, init_db
 
@@ -13,9 +13,11 @@ db = SQLite3Connection(conn)
 
 wr = WorksRepo(db)
 gr = GenresRepo(db)
+cr = CompletedRepo(db)
 
 wr.rewrite()
 gr.rewrite()
+cr.rewrite()
 
 #####################################################
 ################ START TESTING HERE #################
@@ -69,6 +71,30 @@ for genre in genres:
 print(gr.exists(5))
 gr.delete(5)
 print(gr.exists(5))
+
+
+
+c1 = Completed(id=1, score=912, view_count=1)
+c2 = Completed(id=2, score=1000, view_count=1)
+
+cr.add(c1)
+cr.add(c2)
+
+coms = cr.get_all()
+
+print("#" * 80)
+for com in coms:
+    print(com.model_dump_json(indent=2))
+
+cr.set_score(work_id=1, score=922)
+cr.set_notes(work_id=2, notes="Absolute cinema")
+cr.increment_view(work_id=1)
+
+coms = cr.get_all()
+
+print("#" * 80)
+for com in coms:
+    print(com.model_dump_json(indent=2))
 
 
 close_db(conn)
