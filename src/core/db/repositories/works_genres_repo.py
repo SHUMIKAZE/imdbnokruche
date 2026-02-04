@@ -59,3 +59,8 @@ class WorksGenresRepo:
         """
         
         self._db._executescript(sql)
+
+    def exists(self, work_id: int, genre_id: int) -> bool:
+        sql = f"SELECT 1 FROM {self.table} WHERE work_id = ? AND genre_id = ? LIMIT 1"
+
+        return self._db._fetchrow(sql, (work_id, genre_id,)) is not None

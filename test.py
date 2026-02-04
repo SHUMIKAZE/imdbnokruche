@@ -122,4 +122,7 @@ rs = db._fetch("SELECT * FROM works_genres", None)
 for r in rs:
     print(dict(r))
 
+print(wgr.exists(1, 5))
+print(wgr.exists(3, 3))
+
 close_db(conn)
