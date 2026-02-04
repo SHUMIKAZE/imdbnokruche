@@ -3,6 +3,7 @@ from ..core.db.schema import (
     WORKS_TABLE,
     GENRES_TABLE,
     COMPLETED_TABLE,
+    WORKS_GENRES_TABLE,
 )
 
 

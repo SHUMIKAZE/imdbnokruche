@@ -2,7 +2,7 @@ from typing import Dict, Optional, TypeVar, Generic, Type, List
 from abc import ABC
 
 from ...models import BaseDBModel
-from src.core.db.db_api.base import BaseConnection
+from ..db_api import BaseConnection
 
 T = TypeVar("T", bound=BaseDBModel)
 

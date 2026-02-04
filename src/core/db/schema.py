@@ -27,3 +27,13 @@ COMPLETED_TABLE = """
         FOREIGN KEY(id) REFERENCES works(id) ON DELETE CASCADE
     );
 """
+
+WORKS_GENRES_TABLE = """
+    CREATE TABLE IF NOT EXISTS works_genres (
+        work_id INTEGER NOT NULL,
+        genre_id INTEGER NOT NULL,
+        PRIMARY KEY (work_id, genre_id),
+        FOREIGN KEY (work_id) REFERENCES works(id) ON DELETE CASCADE,
+        FOREIGN KEY (genre_id) REFERENCES genres(id) ON DELETE CASCADE
+    );
+"""

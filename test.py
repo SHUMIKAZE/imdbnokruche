@@ -1,5 +1,5 @@
 from src.core.models import Work, Genre, Completed
-from src.core.db import WorksRepo, GenresRepo, CompletedRepo
+from src.core.db import WorksRepo, GenresRepo, CompletedRepo, WorksGenresRepo
 from src.core.db import SQLite3Connection
 from src.utils import connect_db, close_db, init_db
 
@@ -14,10 +14,12 @@ db = SQLite3Connection(conn)
 wr = WorksRepo(db)
 gr = GenresRepo(db)
 cr = CompletedRepo(db)
+wgr = WorksGenresRepo(db, wr, gr)
 
 wr.rewrite()
 gr.rewrite()
 cr.rewrite()
+wgr.rewrite()
 
 #####################################################
 ################ START TESTING HERE #################
@@ -68,9 +70,9 @@ print("#" * 80)
 for genre in genres:
     print(genre.model_dump_json(indent=2))
 
-print(gr.exists(5))
-gr.delete(5)
-print(gr.exists(5))
+print(gr.exists(3))
+gr.delete(3)
+print(gr.exists(3))
 
 
 
@@ -96,5 +98,26 @@ print("#" * 80)
 for com in coms:
     print(com.model_dump_json(indent=2))
 
+
+
+wgr.add(1, 1)
+wgr.add(1, 2)
+wgr.add(1, 5)
+wgr.add(2, 1)
+wgr.add(2, 4)
+
+wgs = wgr.get_works_for_genre(1)
+print("#" * 80)
+for wg in wgs:
+    print(wg.model_dump_json(indent=2))
+
+wgr.remove(1, 1)
+
+wgs = wgr.get_genres_for_work(1)
+print("#" * 80)
+for wg in wgs:
+    print(wg.model_dump_json(indent=2))
+
+db._execute("SELECT * FROM works_genres", None)
 
 close_db(conn)
