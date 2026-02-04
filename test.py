@@ -118,6 +118,8 @@ print("#" * 80)
 for wg in wgs:
     print(wg.model_dump_json(indent=2))
 
-db._execute("SELECT * FROM works_genres", None)
+rs = db._fetch("SELECT * FROM works_genres", None)
+for r in rs:
+    print(dict(r))
 
 close_db(conn)
