@@ -1,5 +1,5 @@
-from src.core.models import Work, Genre, Completed
-from src.core.db import WorksRepo, GenresRepo, CompletedRepo, WorksGenresRepo
+from src.core.models import Work, Genre, Completed, FullWork
+from src.core.db import WorksRepo, GenresRepo, CompletedRepo, WorksGenresRepo, WorkService
 from src.core.db import SQLite3Connection
 from src.utils import connect_db, close_db, init_db
 
@@ -15,6 +15,8 @@ wr = WorksRepo(db)
 gr = GenresRepo(db)
 cr = CompletedRepo(db)
 wgr = WorksGenresRepo(db, wr, gr)
+
+ws = WorkService(wr, gr, wgr, cr)
 
 wr.rewrite()
 gr.rewrite()
@@ -124,5 +126,7 @@ for r in rs:
 
 print(wgr.exists(1, 5))
 print(wgr.exists(3, 3))
+
+fullwork = ws.get_full_work(2)
 
 close_db(conn)
