@@ -120,7 +120,7 @@ print("#" * 80)
 for wg in wgs:
     print(wg.model_dump_json(indent=2))
 
-rs = db._fetch("SELECT * FROM works_genres", None)
+rs = db._fetch("SELECT * FROM works_genres")
 for r in rs:
     print(dict(r))
 
@@ -128,5 +128,16 @@ print(wgr.exists(1, 5))
 print(wgr.exists(3, 3))
 
 fullwork = ws.get_full_work(2)
+
+fw = Work(original_title="asdadasd", year=15, format="Series", consumption_type="watch", industry="asdda")
+fg1 = g1
+fg2 = Genre(name="sadasdad")
+fc = Completed(view_count=2, score=234)
+
+ffw = FullWork(work=fw, genres=[fg1, fg2], completed=fc)
+
+ffw = ws.create_work(ffw)
+
+print(ffw)
 
 close_db(conn)

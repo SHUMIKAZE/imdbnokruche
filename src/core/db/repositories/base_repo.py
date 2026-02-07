@@ -14,7 +14,7 @@ class BaseRepo(Generic[T], ABC):
     def __init__(self, db: BaseConnection) -> None:
         self._db = db
 
-    def add(self, obj: T) -> None:
+    def add(self, obj: T) -> T:
         if obj.id == 0:
             data = obj.model_dump(exclude={"id"})
         else:
@@ -25,7 +25,11 @@ class BaseRepo(Generic[T], ABC):
 
         sql = f"INSERT INTO {self.table} ({cols}) VALUES ({placeholders})"
 
-        self._db._execute(sql, (tuple(data.values())))
+        new_id = self._db._execute(sql, (tuple(data.values())))
+        if new_id is not None:
+            obj.id = new_id
+        
+        return obj
 
     def get_all(
             self,
@@ -55,12 +59,14 @@ class BaseRepo(Generic[T], ABC):
 
         return objs 
 
-    def get_by_id(self, obj_id: int) -> T:
+    def get_by_id(self, obj_id: int) -> Optional[T]:
         sql = f"SELECT * FROM {self.table} WHERE id = ?"
 
         row = self._db._fetchrow(sql, (obj_id,))
-        obj = self.model.model_validate(dict(row))
+        if not row:
+            return None
 
+        obj = self.model.model_validate(dict(row))
         return obj
 
     def delete(self, obj_id: int) -> None:

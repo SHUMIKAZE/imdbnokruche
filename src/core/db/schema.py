@@ -7,7 +7,8 @@ WORKS_TABLE = """
         year INTEGER NOT NULL,
         format TEXT NOT NULL,
         consumption_type TEXT NOT NULL,
-        industry TEXT NOT NULL
+        industry TEXT NOT NULL,
+        UNIQUE(original_title, year, format, consumption_type, industry)
     );
 """
 

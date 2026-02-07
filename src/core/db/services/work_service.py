@@ -1,3 +1,4 @@
+from sqlite3 import IntegrityError
 from typing import Optional
 from ..repositories import (
     WorksRepo,
@@ -16,13 +17,37 @@ class WorkService:
         works_genres_repo: WorksGenresRepo,
         completed_repo: CompletedRepo,
     ) -> None:
+
         self.works_repo = works_repo
         self.genres_repo = genres_repo
         self.works_genres_repo = works_genres_repo
         self.completed_repo = completed_repo
 
-    def create_work(self) -> None:
-        pass
+    def create_work(self, full_work: FullWork) -> FullWork:
+        if not full_work.work:
+            raise ValueError("Work is not assigned")
+
+        try:
+            full_work.work = self.works_repo.add(full_work.work)
+        except IntegrityError as e:
+            raise ValueError("Work already exists") from e
+
+        full_work.genres = [
+            self.genres_repo.get_or_create(g.name)
+            for g in full_work.genres
+        ]
+
+        for genre in full_work.genres:
+            self.works_genres_repo.add(
+                full_work.work.id,
+                genre.id
+            )
+
+        if full_work.completed:
+            full_work.completed.id = full_work.work.id
+            full_work.completed = self.completed_repo.add(full_work.completed)
+
+        return full_work
 
     def delete_work(self):
         pass

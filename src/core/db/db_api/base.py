@@ -24,7 +24,7 @@ class BaseConnection(ABC):
         self,
         sql: str,
         params: Optional[Tuple[Any, ...]],
-    ) -> None:
+    ) -> Optional[int]:
         ...
 
     @abstractmethod

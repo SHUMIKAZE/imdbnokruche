@@ -11,33 +11,44 @@ class SQLite3Connection(BaseConnection):
     def _fetch(
         self,
         sql: str,
-        params: Optional[Tuple[Any, ...]],
+        params: Optional[Tuple[Any, ...]] = None,
     ) -> List[Any]:
         cursor = self._conn.cursor()
-        cursor.execute(sql, params or ())
-        rows = cursor.fetchall()
+        if not params:
+            cursor.execute(sql)
+        else:
+            cursor.execute(sql, params)
 
+        rows = cursor.fetchall()
         return rows
 
     def _fetchrow(
         self,
         sql: str,
-        params: Optional[Tuple[Any, ...]],
+        params: Optional[Tuple[Any, ...]] = None,
     ) -> Any:
         cursor = self._conn.cursor()
-        cursor.execute(sql, params or ())
-        row = cursor.fetchone()
+        if not params:
+            cursor.execute(sql)
+        else:
+            cursor.execute(sql, params)
 
+        row = cursor.fetchone()
         return row
 
     def _execute(
         self,
         sql: str,
-        params: Optional[Tuple[Any, ...]],
-    ) -> None:
+        params: Optional[Tuple[Any, ...]] = None,
+        ) -> Optional[int]:
         cursor = self._conn.cursor()
-        cursor.execute(sql, params or ())
+        if not params:
+            cursor.execute(sql)
+        else:
+            cursor.execute(sql, params)
+
         self._conn.commit()
+        return cursor.lastrowid
 
     def _executescript(self, sql_script: str) -> None:
         self._conn.executescript(sql_script)
